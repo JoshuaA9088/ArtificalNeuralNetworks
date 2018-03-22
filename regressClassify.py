@@ -45,15 +45,7 @@ def drawLine(m,b):
     y2 = m*x2 + b
     foo = Line((x1, getY(y1)), (x2, getY(y2)))
     foo.draw(win)
-    """
-    for i in range(0,win.width,step):
-        yHat=x0+x1*i        
-        c=Circle((i,getY(yHat)),5)
-        c.fill=Color("green")
-        c.draw(win)
-        line.append(c)
-    """
-    
+
     return foo        
 
 def mean(x):
@@ -91,14 +83,14 @@ def corr(X,Y):
     return r
   
 def getError(c, yHat, y):
-    if c == 0:
-       error = y - yHat
+    if c == 1:
+       error = (y - yHat)
     else:
-       error = yHat - y
+       error = (yHat - y)
     return error 
           
 def gradientDescent(m,b,X, Y, C):
-    lRate=.00001
+    lRate=.000001
     n = len(X)
     bGradient = 0
     mGradient = 0
@@ -108,13 +100,14 @@ def gradientDescent(m,b,X, Y, C):
         error = getError(C[i], yHat, Y[i])
         mGradient += X[i] * (error)
         bGradient += 1*(error)
+        #print(bGradient, "Bgrad")
         cost += pow((error),2)
     mGradient = mGradient * (-2/n)
-    bGradient = bGradient * (-2/n)
+    #bGradient = bGradient * (-2/n)
     cost = sqrt(cost) / n
     m = m - (lRate * mGradient)
     b = b - (lRate * bGradient)
-    return m,b,cost
+    return m,b,cost, error
 
 
     
@@ -123,7 +116,7 @@ plotData(data)
 
 X=[d[0] for d in data]
 Y=[d[1] for d in data]
-c = [d[2] for d in data]
+C = [d[2] for d in data]
 b=0
 m=0
     
@@ -133,11 +126,12 @@ line=drawLine(m,b)
 while True:
     line.undraw()
 
-    m,b,cost=gradientDescent(m,b,X, Y, c)
+    m,b,cost, error=gradientDescent(m,b,X, Y, C)
     line=drawLine(m,b)
 
     print(m,b, cost)
-    wait(0.08)
+    print("Error", error)
+    wait(0.3)
     """
     ans=input("Press any key to continue")
     if ans=='q':

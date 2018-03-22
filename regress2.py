@@ -121,7 +121,7 @@ def linearRegression(X, y, m_current=0, b_current=0, epochs=1000, learning_rate=
      return m_current, b_current, cost          
 """
     
-data=getData("sampleData1.txt")
+data=getData("sampleData3.txt")
 plotData(data)   
 
 X=[d[0] for d in data]
@@ -140,7 +140,7 @@ while True:
     line=drawLine(m,b)
 
     print(m,b, cost)
-    wait(0.1)
+    wait(0.2)
     """
     ans=input("Press any key to continue")
     if ans=='q':
