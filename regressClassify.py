@@ -83,35 +83,49 @@ def corr(X,Y):
     return r
   
 def getError(c, yHat, y):
-    if c == 1:
+    if c == 0:
        error = (y - yHat)
     else:
        error = (yHat - y)
     return error 
           
-def gradientDescent(m,b,X, Y, C):
-    lRate=.000001
-    n = len(X)
-    bGradient = 0
+
+def gradientDescent(m,b,X,Y):
+    lRate = .00001
     mGradient = 0
+    bGradient = 0
     cost = 0
+    n = len(X)
     for i in range(n):
         yHat = (m * X[i]) + b
-        error = getError(C[i], yHat, Y[i])
-        mGradient += X[i] * (error)
-        bGradient += 1*(error)
-        #print(bGradient, "Bgrad")
-        cost += pow((error),2)
+        mGradient += X[i] * (Y[i] - yHat)
+        bGradient += (Y[i] - yHat)
+        cost += pow((Y[i] - yHat), 2)
     mGradient = mGradient * (-2/n)
-    #bGradient = bGradient * (-2/n)
-    cost = sqrt(cost) / n
-    m = m - (lRate * mGradient)
     b = b - (lRate * bGradient)
-    return m,b,cost, error
+    return m, b, cost
 
 
+def computeErrorforLineGivenPointst(m,b,X, Y):
+    lRate=.000001
+    n = len(X)
+    totalError = 0
+    for i in range (n):
+        totalError += (Y[i] - (m*X[i] + b))
+    return totalError / n
+
+def stepGradient(b_current, m_current, X, Y, lRate = .0001):
+    b_gradient = 0
+    m_gradient = 0
+    n = len(X)
+    for i in range(n):
+        b_gradient += (-2/n) * (Y[i] - ((m_current * X[i]) + b_current))
+        m_gradient += (-2/n) * X[i] * (Y[i] - ((m_current * X[i]) + b_current))
+    new_b = b_current - (lRate * b_gradient)
+    new_m = m_current - (lRate * m_gradient)
+    return new_m, new_b
     
-data=getData("sampleData1.txt")
+data=getData("sampleData3.txt")
 plotData(data)   
 
 X=[d[0] for d in data]
@@ -126,12 +140,13 @@ line=drawLine(m,b)
 while True:
     line.undraw()
 
-    m,b,cost, error=gradientDescent(m,b,X, Y, C)
+    #m,b =stepGradient(m,b,X, Y)
+    m,b,cost = gradientDescent(m,b,X,Y)
     line=drawLine(m,b)
 
-    print(m,b, cost)
-    print("Error", error)
-    wait(0.3)
+    #print(m,b, cost)
+    #print("Error", error)
+    wait(0.5)
     """
     ans=input("Press any key to continue")
     if ans=='q':

@@ -1,56 +1,59 @@
-from Graphics import *
-import math
-
-def getData(filename):
-    data=[]
-    f=open(filename)
-    for line in f:
-        line=line.split()
-        for i in range(len(line)):
-            line[i]=float(line[i])
-        #print(line)
-        data.append(line)
-    return data
-
-def getY(y):
-    return win.height-y
-        
-        
-                        
-def plotData(data):
-    color=None
-    for d in data:
-        if d[2]==1:
-            color="red"
-        else:
-            color="blue"            
-        c=Circle((d[0],getY(d[1])),5)
-        c.fill=Color(color)
-        c.draw(win)
+import numpy as np
+import random
+import matplotlib.pyplot as plt
 
 
+# m denotes the number of examples here, not the number of features
+def gradientDescent(x, y, theta, alpha, m, numIterations):
+    xTrans = x.transpose()
+    for i in range(0, numIterations):
+        hypothesis = np.dot(x, theta)
+        loss = hypothesis - y
+        # avg cost per example (the 2 in 2*m doesn't really matter here.
+        # But to be consistent with the gradient, I include it)
+        cost = np.sum(loss ** 2) / (2 * m)
+        # print("Iteration %d | Cost: %f" % (i, cost))
+        # avg gradient per example
+        gradient = np.dot(xTrans, loss) / m
+        # update
+        theta = theta - alpha * gradient
+    return theta
 
 
+def genData(numPoints, bias, variance):
+    x = np.zeros(shape=(numPoints, 2))
+    y = np.zeros(shape=numPoints)
+    # basically a straight line
+    for i in range(0, numPoints):
+        # bias feature
+        x[i][0] = 1
+        x[i][1] = i
+        # our target variable
+        y[i] = (i + bias) + random.uniform(0, 1) * variance
+    return x, y
 
-def linearRegression(X, y, m_current=0, b_current=0, epochs=1000, learning_rate=0.0001):
-     N = float(len(y))
-     for i in range(epochs):
-          y_current = (m_current * X) + b_current
-          cost = sum([data**2 for data in (y-y_current)]) / N
-          m_gradient = -(2/N) * sum(X * (y - y_current))
-          b_gradient = -(2/N) * sum(y - y_current)
-          m_current = m_current - (learning_rate * m_gradient)
-          b_current = b_current - (learning_rate * b_gradient)
-     return m_current, b_current, cost          
+def sigmoid_activation(x):
+	# compute and return the sigmoid activation value for a
+	# given input value
+	return 1.0 / (1 + np.exp(-x))
 
-    
-        
-    
-data=getData("sampleData.txt")
-plotData(data)   
+# gen 100 points with a bias of 25 and 10 variance as a bit of noise
+x, y = genData(100, 25, 10)
+print len(x)
+print len(y)
+m, n = np.shape(x)
+numIterations= 100000
+alpha = 0.0005
+theta = np.ones(n)
+theta = gradientDescent(x, y, theta, alpha, m, numIterations)
+plt.figure()
+colors = np.random.rand(50)
 
-X=[d[0] for d in data]
-Y=[d[1] for d in data]
-    
-b0, b1 = linearRegression(X, Y)
-print (b0, b1)
+for i in range (len(x)):
+    plt.scatter(x[:, 1][i], y[i], marker="o")
+    preds = sigmoid_activation(x.dot(theta))
+    plt.plot(preds, y)
+# plt.plot(np.unique(x), np.poly1d(np.polyfit(x[:,1], y, 1))(np.unique(x)))
+
+plt.show()
+# print(theta)

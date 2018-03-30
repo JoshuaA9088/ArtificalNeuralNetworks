@@ -44,6 +44,7 @@ def drawLine(m,b):
     y1 = m*x1 + b
     y2 = m*x2 + b
     foo = Line((x1, getY(y1)), (x2, getY(y2)))
+    #foo = Line((x1, y1), (x2, y2))
     foo.draw(win)
     """
     for i in range(0,win.width,step):
@@ -90,16 +91,17 @@ def corr(X,Y):
     r = t/b
     return r
   
+
 def gradientDescent(m,b,X, Y):
-    lRate=.00001
+    lRate=.0001
     n = len(X)
-    bGradient = 0
     mGradient = 0
+    bGradient = 0
     cost = 0
     for i in range(n):
         yHat = (m * X[i]) + b
-        mGradient += X[i] * (Y[i] - yHat)
-        bGradient += 1*(Y[i] - yHat)
+        bGradient += X[i] * (Y[i] - yHat)
+        mGradient += 1*(Y[i] - yHat)
         cost += pow((Y[i] - yHat),2)
     mGradient = mGradient * (-2/n)
     bGradient = bGradient * (-2/n)
@@ -109,19 +111,24 @@ def gradientDescent(m,b,X, Y):
     return m,b,cost
 
 """
-def linearRegression(X, y, m_current=0, b_current=0, epochs=1000, learning_rate=0.0001):
-     N = float(len(y))
-     for i in range(epochs):
-          y_current = (m_current * X) + b_current
-          cost = sum([data**2 for data in (y-y_current)]) / N
-          m_gradient = -(2/N) * sum(X * (y - y_current))
-          b_gradient = -(2/N) * sum(y - y_current)
-          m_current = m_current - (learning_rate * m_gradient)
-          b_current = b_current - (learning_rate * b_gradient)
-     return m_current, b_current, cost          
+
+def gradientDescent(m,b,X,Y):
+    lRate = .00001
+    mGradient = 0
+    bGradient = 0
+    cost = 0
+    n = len(X)
+    for i in range(n):
+        yHat = (m * X[i]) + b
+        mGradient += X[i] * (Y[i] - yHat)
+        bGradient += (Y[i] - yHat)
+        cost += pow((Y[i] - yHat), 2)
+    mGradient = mGradient * (-2/n)
+    b = b - (lRate * bGradient)
+    return m, b, cost
 """
-    
-data=getData("sampleData3.txt")
+
+data=getData("sampleData5.txt")
 plotData(data)   
 
 X=[d[0] for d in data]
@@ -137,6 +144,7 @@ while True:
     line.undraw()
 
     m,b,cost=gradientDescent(m,b,X, Y)
+    #m,b,cost = linearRegression(X, Y)
     line=drawLine(m,b)
 
     print(m,b, cost)
