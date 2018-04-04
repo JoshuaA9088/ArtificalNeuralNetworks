@@ -23,15 +23,21 @@ def getData(filename):
     return data
 
 def getY(y):
-    return win.height-y
+    newY = (win.height / 2) - y
+    #newY = (y) - yAvg
 
+    return newY
+    #return y
+def getX(x):
+    return (x) + (win.width / 2)
+    
 def mean(x):
     s=0
     for i in range(len(x)):
         s+=x[i]
     return s/len(x)
      
-data=getData("sampleData5.txt")
+data=getData("sampleData1.txt")
  
 
 X=[d[0] for d in data]
@@ -44,23 +50,23 @@ for i in range(len(X)):
     Y[i] = Y[i] - yAvg        
 def plotData(data):
     color=None
-    for d in data:
-        if d[2]==1:
+    for i in range(len(data)):
+        if data[i][2]==1:
             color="red"
         else:
             color="blue"            
-        c=Circle((d[0],getY(d[1])),5)
+        c=Circle((getX(X[i]),getY(Y[i])),5)
         c.fill=Color(color)
         c.draw(win)
 plotData(data)  
 
 def drawLine(m,b):
     #line=[]
-    x1 = 0
-    x2 = win.width
+    x1 = -win.width / 2
+    x2 = win.width / 2
     y1 = m*x1 + b
     y2 = m*x2 + b
-    foo = Line((x1, getY(y1)), (x2, getY(y2)))
+    foo = Line((getX(x1), getY(y1)), (getX(x2), getY(y2)))
     foo.draw(win)
     """
     for i in range(0,win.width,step):
@@ -137,7 +143,7 @@ while True:
 
     m,b,cost=gradientDescent(m,b,X, Y)
     #m,b,cost = gradientDescent(b,X,Y)
-    line=drawLine(m,b+yAvg)
+    line=drawLine(m,b)
     #print(X, Y)
     print(m,b, cost)
     wait(0.2)
