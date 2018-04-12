@@ -77,7 +77,7 @@ class network:
         return ret
     
     def getEdges(self, tar):
-        # Returns Connections based on passed targets
+        # Returns Connections based on passed target
         target = str(tar)
         try:
             self.edges[target]
@@ -87,24 +87,29 @@ class network:
         
 n = network()
 
+# myNode = node(bias, aType = 'step type')
 a = node(0)
 b = node(0)
 c = node(0)
 
+# add nodes to network
 n.addNode(a)
 n.addNode(b)
 n.addNode(c)
 
 # A -> C W = 0.5
 # B -> C W = -0.1
-# n.addEdge(target, [src, weight))
 
+# n.addEdge(target, (src, weight)) 
+# Add Edges to network with weights
 n.addEdge(n.nodes[2], ("n.nodes[0]", 0.5))
 n.addEdge(n.nodes[2], ("n.nodes[1]", -0.1))
 
+# Set which node(s) are output and input
 n.setOut([n.nodes[2]])
 n.setIn([n.nodes[0], n.nodes[1]])
 
+# Check and make sure step works
 print(n.getOut())   
 n.step()
 print(n.getOut())  
