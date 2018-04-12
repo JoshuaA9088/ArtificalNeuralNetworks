@@ -40,15 +40,24 @@ class node:
 class network:
     def __init__(self):
         self.nodes = []
-        self.edges = []
+        self.edges = {}
         self.outputs = []
         self.inputs = []
-    
+
     def addNode(self, n):
         self.nodes.append(n)
     
-    def addEdge(self, n1, n2, w):
-        self.edges.append((n1, n2, w))
+    def addEdge(self, tar, src):
+        self.target = str(tar)
+        self.src = (src)
+        # Try catch so first connection defines
+        # target in dictionary, all others are only appended
+        try:
+            self.edges[self.target]
+        except:
+            self.edges[self.target] = []
+            print("Made New Target")
+        self.edges[self.target].append(self.src) 
         
     def setOut(self, outputs):
         self.outputs = outputs
@@ -58,7 +67,7 @@ class network:
 
     def step(self):
         for i in range(len(self.nodes)):
-            self.nodes.setIntputs(
+            #self.nodes.setIntputs(
             self.nodes[i].activate()
             
     def getOut(self):
@@ -67,6 +76,15 @@ class network:
             ret.append(self.outputs[i].out)
         return ret
     
+    def getEdges(self, tar):
+        # Returns Connections based on passed targets
+        target = str(tar)
+        try:
+            self.edges[target]
+        except:
+            return "Undefined Target"
+        return self.edges[target] 
+        
 n = network()
 
 a = node(0)
@@ -77,13 +95,21 @@ n.addNode(a)
 n.addNode(b)
 n.addNode(c)
 
-n.addEdge(n.nodes[0], n.nodes[2], 0.5)
-n.addEdge(n.nodes[1], n.nodes[2], -.1)
+# A -> C W = 0.5
+# B -> C W = -0.1
+# n.addEdge(target, [src, weight))
+
+n.addEdge(n.nodes[2], ("n.nodes[0]", 0.5))
+n.addEdge(n.nodes[2], ("n.nodes[1]", -0.1))
 
 n.setOut([n.nodes[2]])
 n.setIn([n.nodes[0], n.nodes[1]])
 
-
 print(n.getOut())   
 n.step()
-print(n.getOut())          
+print(n.getOut())  
+
+edges = n.getEdges(n.nodes[2])
+print(edges) 
+
+
