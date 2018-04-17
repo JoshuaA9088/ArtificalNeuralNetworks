@@ -30,11 +30,15 @@ class node:
             else:
                 return 0
 
+    def addWeight(self, val):
+        self.weights.append(val)
+
     def activate(self):
         p = 0
         for i in range(len(self.weights)):
             p += self.weights[i] * self.inputs[i]
         self.out = self.actFunction(p + self.bias)
+        print("pou",self.out)
 
 class network:
     def __init__(self):
@@ -46,8 +50,9 @@ class network:
     def addNode(self, n):
         self.nodes.append(n)
 
-    def addEdge(self, tar, src):
+    def connectEdge(self, tar, src):
         self.target = str(tar)
+        # self.target = tar
         self.src = (src)
         # Try catch so first connection defines
         # target in dictionary, all others are only appended
@@ -57,14 +62,14 @@ class network:
             self.edges[self.target] = []
         self.edges[self.target].append(self.src)
 
-        def getEdges(self, tar):
-            # Returns Connections based on passed target
-            target = str(tar)
-            try:
-                self.edges[target]
-            except:
-                return "Undefined Target"
-                return self.edges[target]
+    def getEdges(self, tar):
+        # Returns Connections based on passed target
+        target = str(tar)
+        try:
+            self.edges[target]
+        except:
+            return "Undefined Target"
+        return self.edges[target]
 
     def setOut(self, outputs):
         self.outputs = outputs
@@ -72,9 +77,11 @@ class network:
     def setIn(self, inputs):
         self.inputs = inputs
 
+    def getInput(self):
+        return self.inputs
+
     def step(self):
         for i in range(len(self.nodes)):
-            #self.nodes.setIntputs(
             self.nodes[i].activate()
 
     def getOut(self):
@@ -85,10 +92,11 @@ class network:
 
 n = network()
 
-# myNode = node(bias, aType = 'step type')
-a = node(0)
-b = node(0)
+# myNode = node(bias, aType = 'type')
+a = node(-50)
+b = node(-50)
 c = node(0)
+
 
 # add nodes to network
 n.addNode(a)
@@ -106,13 +114,23 @@ n.addNode(c)
 #     C
 
 # n.addEdge(target, (src, weight))
-# Add Edges to network with weights
-n.addEdge(n.nodes[2], ("n.nodes[0]", 0.5))
-n.addEdge(n.nodes[2], ("n.nodes[1]", -0.1))
 
+# Add Edges to network with weights
+n.connectEdge(n.nodes[2], (n.nodes[0], 1)) # W = 0.5
+n.connectEdge(n.nodes[2], (n.nodes[1], 1)) # W = -.1
+
+a.addWeight(-10)
+a.addWeight(-10)
+a.setInputs([1, 1])
+
+b.addWeight(1)
+b.addWeight(1)
+b.setInputs([1, 1])
 # Set which node(s) are output and input
 n.setOut([n.nodes[2]])
 n.setIn([n.nodes[0], n.nodes[1]])
+
+
 
 # Check and make sure step works
 print(n.getOut())
