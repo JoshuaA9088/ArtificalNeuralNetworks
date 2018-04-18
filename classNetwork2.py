@@ -1,5 +1,3 @@
-# Single Layer Neural Network
-
 import math
 
 class edge:
@@ -11,7 +9,7 @@ class edge:
 
     def setWeight(self, v):
         self.weight = v
-
+        
 class node:
     def __init__(self, bias, ID, aType = 'step'):
         self.bias = bias
@@ -31,33 +29,34 @@ class node:
             else:
                 return 0
 
-    def addWeight(self, val):
-        self.weights.append(val)
-
     def activate(self):
         p = 0
         for i in range(len(self.weights)):
             p += self.weights[i] * self.inputs[i]
         self.out = self.actFunction(p + self.bias)
-        print("pou",self.out)
     
     def __str__(self):
         return str(self.ID)
         
 class network:
     def __init__(self):
-        self.nodes = []
+        self.nodes = {}
         self.edges = {}
         self.outputs = []
         self.inputs = []
 
-    def addNode(self, n):
-        self.nodes.append(n)
+    def addNode(self, ID, bias):
+        self.nodes[ID] = (node(bias, ID))
+    
+    def inputToNode(self, ID, inputVal):
+        self.nodes[ID].setInputs(inputVal)
+    
+    def getNodes(self):
+        return self.nodes
 
     def connectEdge(self, tar, src):
-        self.target = str(tar)
-        # self.target = tar
-        self.src = str(src)
+        self.target = (tar)
+        self.src = (src)
         # Try catch so first connection defines
         # target in dictionary, all others are only appended
         try:
@@ -65,7 +64,7 @@ class network:
         except:
             self.edges[self.target] = []
         self.edges[self.target].append(self.src)
-
+        
     def getEdges(self, tar):
         # Returns Connections based on passed target
         target = str(tar)
@@ -85,7 +84,7 @@ class network:
         return self.inputs
 
     def step(self):
-        for i in range(len(self.nodes)):
+        for i in (self.nodes):
             self.nodes[i].activate()
 
     def getOut(self):
@@ -93,43 +92,40 @@ class network:
         for i in range(len(self.outputs)):
             ret.append(self.outputs[i].out)
         return ret
-
+        
 n = network()
 
-# myNode = node(bias, aType = 'type')
-a = node(-50, "i0")
-b = node(-50, "i1")
-c = node(0, "o0")
-print(a)
-
 # add nodes to network
-n.addNode(a)
-n.addNode(b)
-n.addNode(c)
+# n.addNode(ID, bias, aType 'type')
+n.addNode("i0", -50)
+n.addNode("i1", -50)
+n.addNode("o0", 0)
+
+n.inputToNode("i0", -100000)
+n.inputToNode("i1", -100000)
+
+nodes = n.getNodes()
+# Print each node id
+for i in nodes:
+    print(i)
 
 # A -> C W = 0.5
 # B -> C W = -0.1
 
-# A        b
-# \       /
-#  \     /
-#   \   /
-#    \ /
-#     C
+# Connect Edges to network with weights
+# n.connectEdge(target, (src, weight))
+n.connectEdge("o0", ("i0", 1)) # W = 0.5
+n.connectEdge("o0", ("i1", 1)) # W = -.1
 
-# n.addEdge(target, (src, weight))
-
-# Add Edges to network with weights
-n.connectEdge(n.nodes[2], (n.nodes[0], 1)) # W = 0.5
-n.connectEdge(n.nodes[2], (n.nodes[1], 1)) # W = -.1
-
-n.setOut([n.nodes[2]])
-n.setIn([n.nodes[0], n.nodes[1]])
+# Set output/input nodes
+n.setOut([nodes["o0"]])
+n.setIn([nodes["i0"], nodes["i1"]])
 
 # Check and make sure step works
-print(n.getOut())
+print("OUTPUT BEFORE:", n.getOut())
 n.step()
-print(n.getOut())
+print("OUTPUT AFTER:", n.getOut())
 
-edges = n.getEdges(n.nodes[2])
-print(edges)
+# What are the edges of o0?
+edges = n.getEdges("o0")
+print("Edges of o0:", edges)
