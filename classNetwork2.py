@@ -98,7 +98,11 @@ class network:
                 self.activeNodes[i] = self.nodes[i].activate()
         for i in self.outputs:
             for e in self.edges[str(i)]:
-                
+                try:
+                    print self.activeNodes[e[0]]
+                except:
+                    pass
+
 
     def getOut(self):
         ret = []
