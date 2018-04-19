@@ -9,7 +9,7 @@ class edge:
 
     def setWeight(self, v):
         self.weight = v
-        
+
 class node:
     def __init__(self, bias, ID, aType = 'step'):
         self.bias = bias
@@ -34,25 +34,32 @@ class node:
         for i in range(len(self.weights)):
             p += self.weights[i] * self.inputs[i]
         self.out = self.actFunction(p + self.bias)
-    
+
+    def getBias(self):
+        return self.bias
+
     def __str__(self):
         return str(self.ID)
-        
+
 class network:
     def __init__(self):
         self.nodes = {}
         self.edges = {}
         self.outputs = []
         self.inputs = []
+        self.activeNodes = {}
 
     def addNode(self, ID, bias):
         self.nodes[ID] = (node(bias, ID))
-    
+
     def inputToNode(self, ID, inputVal):
         self.nodes[ID].setInputs(inputVal)
-    
-    def getNodes(self):
+
+    def getAllNodes(self):
         return self.nodes
+
+    def getBiasNode(self, ID):
+        return self.nodes[ID].getBias()
 
     def connectEdge(self, tar, src):
         self.target = (tar)
@@ -64,7 +71,7 @@ class network:
         except:
             self.edges[self.target] = []
         self.edges[self.target].append(self.src)
-        
+
     def getEdges(self, tar):
         # Returns Connections based on passed target
         target = str(tar)
@@ -85,14 +92,20 @@ class network:
 
     def step(self):
         for i in (self.nodes):
-            self.nodes[i].activate()
+            if i in self.outputs:
+                pass
+            else:
+                self.activeNodes[i] = self.nodes[i].activate()
+        for i in self.outputs:
+            for e in self.edges[str(i)]:
+                
 
     def getOut(self):
         ret = []
         for i in range(len(self.outputs)):
             ret.append(self.outputs[i].out)
         return ret
-        
+
 n = network()
 
 # add nodes to network
@@ -101,13 +114,15 @@ n.addNode("i0", -50)
 n.addNode("i1", -50)
 n.addNode("o0", 0)
 
+print(n.getBiasNode("i0"))
+
 n.inputToNode("i0", -100000)
 n.inputToNode("i1", -100000)
 
-nodes = n.getNodes()
+nodes = n.getAllNodes()
 # Print each node id
-for i in nodes:
-    print(i)
+# for i in nodes:
+#     print(i)
 
 # A -> C W = 0.5
 # B -> C W = -0.1
@@ -128,4 +143,4 @@ print("OUTPUT AFTER:", n.getOut())
 
 # What are the edges of o0?
 edges = n.getEdges("o0")
-print("Edges of o0:", edges)
+# print("Edges of o0:", edges[0][1])
