@@ -42,7 +42,6 @@ class node:
         self.out = self.actFunction(p+self.bias)
         return self.out
 
-
     def getBias(self):
         return self.bias
 
@@ -102,8 +101,9 @@ class network:
             i = str(i)
             val.append(self.nodes[i].activate())
         for i in (self.outputNodes):
-            self.inputToNode(str(i), (val))
-            self.nodes[str(i)].activate()
+            i = str(i)
+            self.inputToNode(i, (val))
+            self.nodes[i].activate()
 
     def getOut(self):
         ret = []
@@ -122,8 +122,8 @@ n.addNode("i0", 0)
 n.addNode("i1", 0)
 n.addNode("o0", 0)
 
-n.inputToNode("i0", [0, 5])
-n.inputToNode("i1", [-5])
+n.inputToNode("i0", [0]) # -> 0
+n.inputToNode("i1", [5]) # -> -.1
 
 nodes = n.getAllNodes()
 
@@ -131,8 +131,8 @@ n.connectEdge("o0", ("i0", 0.5)) # W = 0.5
 n.connectEdge("o0", ("i1", -.1)) # W = -.1
 
 # Set output/input nodes
-n.setOutputNodes([nodes["o0"]])
-n.setInputNodes([nodes["i0"], nodes["i1"]])
+n.setOutputNodes(["o0"])
+n.setInputNodes(["i0", "i1"])
 
 # Check and make sure step works
 print("OUTPUT BEFORE:", n.getOut())
