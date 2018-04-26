@@ -113,24 +113,5 @@ class network:
             ret.append(self.nodes[i].out)
         return ret
 
-n = network()
-
-# add nodes to network
-# n.addNode(ID, bias, aType 'type')
-n.addNode("i0", 0)
-n.addNode("i1", 0)
-n.addNode("o0", 0)
-
-n.inputToNode("i0", 1) # -> 0
-n.inputToNode("i1", 1) # -> -.1
-
-n.setOutputNodes(["o0"])
-n.setInputNodes(["i0", "i1"])
-
-n.connectEdge("o0","i0", 1) # W = 0.5
-n.connectEdge("o0","i1", 1) # W = -.1
-
-# Check and make sure step works
-print("OUTPUT BEFORE:", n.getOut())
-n.step()
-print("OUTPUT AFTER:", n.getOut())
+if __name__ == "__main__":
+    print "foo"
