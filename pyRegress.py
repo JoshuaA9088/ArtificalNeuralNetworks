@@ -19,9 +19,9 @@ class Regression(nn.Module):
         return out
 
 class fitLine:
-    def __init__(self):
-        self.input_dim = 1
-        self.output_dim = 1
+    def __init__(self, id=1, ot=1):
+        self.input_dim = id
+        self.output_dim = ot
         pass
 
     def setVals(self, x, y):
@@ -30,10 +30,9 @@ class fitLine:
         self.x_train = np.asarray(self.x_vals,dtype=np.float32).reshape(-1,1) # Reformats array
         self.y_actual = np.asarray(self.y_vals,dtype=np.float32).reshape(-1,1)
 
-    def regress(self, epochs=2000):
+    def regress(self, epochs=2000, learning_rate=0.01):
         model = Regression(self.input_dim, self.output_dim)
         msl = nn.MSELoss() # Mean Squared Loss
-        learning_rate = 0.01
         optimiser = torch.optim.SGD(model.parameters(), lr = learning_rate)
 
         # epochs = 2000
@@ -59,6 +58,6 @@ class fitLine:
         plt.legend()
         plt.show()
         print(model.state_dict())
-
+        return self.predicted
 if __name__ == "__main__":
     print("Local Run")
