@@ -94,7 +94,7 @@ class network:
         self.inputNodes = inputs
 
     def getInput(self):
-        return self.inputs
+        return self.inputNodes
 
     def step(self):
         val = []
@@ -114,4 +114,4 @@ class network:
         return ret
 
 if __name__ == "__main__":
-    print "foo"
+    print ("foo")
