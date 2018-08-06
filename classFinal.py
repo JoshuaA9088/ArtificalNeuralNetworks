@@ -114,4 +114,4 @@ class network:
         return ret
 
 if __name__ == "__main__":
-    print ("foo")
+    pass
