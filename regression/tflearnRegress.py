@@ -8,7 +8,7 @@ def train_network(x, y, n_epoch=2000, LR=0.01):
     neural_net = tflearn.regression(linear, optimizer='sgd', loss='mean_square',
                                 metric='R2', learning_rate=LR)
 
-    model = tflearn.DNN(neural_net)
+    model = tflearn.DNN(neural_net, tensorboard_verbose=3)
 
     model.fit(x, y, n_epoch, snapshot_epoch=False)
 
@@ -25,25 +25,15 @@ def getData(filename):
         data.append(line)
     return data
 
-def testRegress():
-    data=getData("sampleData3.txt")
-    x=[d[0] for d in data]
-    y=[d[1] for d in data]
+data=getData("sampleData4.txt")
 
-    # x = [0., 1., 2., 3., 4., 5.]
-    # y = [0., 2., 4., 6., 8., 10.]
+x=[d[0] for d in data]
+y=[d[1] for d in data]
 
-    orModel = train_network(x, y, 4000, 0.01)
+orModel = train_network(x, y, 10000, .03)
 
-    yHat = orModel.predict([i for i in x])
-    
-    plt.scatter(x, y, c="red", marker="o")
+yHat = orModel.predict([i for i in x])
 
-    plt.plot(x, yHat)
-
-    print(yHat)
-
-    plt.show()
-
-testRegress()
-# testOr()
+plt.scatter(x, y, c="red", marker="o")
+plt.plot(x, yHat)
+plt.show()
