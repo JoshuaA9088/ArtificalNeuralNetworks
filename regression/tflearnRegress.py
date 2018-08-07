@@ -1,11 +1,13 @@
 import time
 import numpy as np
+import tensorflow as tf
 import tflearn
 import matplotlib.pyplot as plt
 import os.path
 
 
 def train_network(x, y, n_epoch=2000, LR=0.01, loadModel=None, retrain=False):
+    tf.reset_default_graph()
     input_ = tflearn.input_data(shape=[None])
     linear = tflearn.single_unit(input_)
     neural_net = tflearn.regression(linear, optimizer='sgd', loss='mean_square',
@@ -40,9 +42,11 @@ def getData(filename):
             line[i]=float(line[i])
         #print(line)
         data.append(line)
+    f.close()
     return data
 
 def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
+    
     data=getData(dataPath)
 
     x=[d[0] for d in data]
@@ -59,7 +63,7 @@ def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
     plt.show()
 
 testRegress("sampleData.txt", "sample.model")
-# testRegress("sampleData1.txt", "sample1.model")
-# testRegress("sampleData3.txt", "sample3.model")
-# testRegress("sampleData4.txt", "sample4.model", 20000)#, retrain=True)
-# testRegress("sampleData5.txt", "sample5.model", 200000)
+testRegress("sampleData1.txt", "sample1.model")
+testRegress("sampleData3.txt", "sample3.model")
+testRegress("sampleData4.txt", "sample4.model")#, 200000, retrain=True)
+testRegress("sampleData5.txt", "sample5.model")#, 200000, retrain=True)
