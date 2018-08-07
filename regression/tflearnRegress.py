@@ -55,10 +55,11 @@ def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
 
     plt.scatter(x, y, c="red", marker="o")
     plt.plot(x, yHat)
+    plt.title(savePath[:-6])
     plt.show()
 
-# testRegress("sampleData.txt", "sample.model")
+testRegress("sampleData.txt", "sample.model")
 # testRegress("sampleData1.txt", "sample1.model")
 # testRegress("sampleData3.txt", "sample3.model")
-testRegress("sampleData4.txt", "sample4.model", 20000)#, retrain=True)
+# testRegress("sampleData4.txt", "sample4.model", 20000)#, retrain=True)
 # testRegress("sampleData5.txt", "sample5.model", 200000)

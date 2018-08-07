@@ -1,2 +1,2 @@
-model_checkpoint_path: "/mnt/disk/repos/ArtificalNeuralNetworks/regression/sample4.model"
-all_model_checkpoint_paths: "/mnt/disk/repos/ArtificalNeuralNetworks/regression/sample4.model"
+model_checkpoint_path: "/mnt/disk/repos/ArtificalNeuralNetworks/regression/sample.model"
+all_model_checkpoint_paths: "/mnt/disk/repos/ArtificalNeuralNetworks/regression/sample.model"
