@@ -46,24 +46,33 @@ def getData(filename):
     return data
 
 def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
-    
+    color = []
+
     data=getData(dataPath)
 
     x=[d[0] for d in data]
     y=[d[1] for d in data]
-    
+    color=[d[2] for d in data]
+    for i in (color):
+        if i == 1.0:
+            temp = color.index(i)
+            color[temp] = "red"
+        elif i == 0.0:
+            temp = color.index(i)
+            color[temp] = "blue"
+
     model = train_network(x, y, n_epochs, LR, savePath, retrain)
     model.save(savePath)
 
     yHat = model.predict([i for i in x])
 
-    plt.scatter(x, y, c="red", marker="o")
+    plt.scatter(x, y, c=color, marker="o")
     plt.plot(x, yHat)
     plt.title(savePath[:-6])
     plt.show()
 
-testRegress("sampleData.txt", "sample.model")
-testRegress("sampleData1.txt", "sample1.model")
-testRegress("sampleData3.txt", "sample3.model")
+testRegress("sampleData.txt", "sample.model")#, retrain=True)
+testRegress("sampleData1.txt", "sample1.model")#, retrain=True)
+testRegress("sampleData3.txt", "sample3.model")#, 200000, retrain=True)
 testRegress("sampleData4.txt", "sample4.model")#, 200000, retrain=True)
 testRegress("sampleData5.txt", "sample5.model")#, 200000, retrain=True)
