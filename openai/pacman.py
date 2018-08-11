@@ -47,9 +47,9 @@ except Exception:
     scalar_summary = tf.scalar_summary
 
 # Change that value to test instead of train
-testing = False
+testing = True
 # Model path (to load when testing)
-test_model_path = 'training/qlearning.tflearn.ckpt'
+test_model_path = 'training/qlearning.ckpt-486000'
 # Atari game to learn
 # You can also try: 'Breakout-v0', 'Pong-v0', 'SpaceInvaders-v0', ...
 game = 'MsPacman-v0'
@@ -80,7 +80,7 @@ anneal_epsilon_timesteps = 400000
 #   Utils Parameters
 # =============================
 # Display or not gym evironment screens
-show_training = True
+show_training = False
 # Directory for storing tensorboard summaries
 summary_dir = '/tmp/tflearn_logs/'
 summary_interval = 100
@@ -425,7 +425,7 @@ def evaluation(session, graph_ops, saver):
     saver.restore(session, test_model_path)
     print("Restored model weights from ", test_model_path)
     monitor_env = gym.make(game)
-    monitor_env.monitor.start("qlearning/eval")
+    # monitor_env.monitor.start("qlearning/eval")
 
     # Unpack graph ops
     s = graph_ops["s"]
