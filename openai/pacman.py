@@ -47,7 +47,7 @@ except Exception:
     scalar_summary = tf.scalar_summary
 
 # Change that value to test instead of train
-testing = True
+testing = False
 # Model path (to load when testing)
 test_model_path = 'training/qlearning.ckpt-486000'
 # Atari game to learn
