@@ -47,9 +47,9 @@ except Exception:
     scalar_summary = tf.scalar_summary
 
 # Change that value to test instead of train
-testing = False
+testing = True
 # Model path (to load when testing)
-test_model_path = 'training/qlearning.ckpt-486000'
+test_model_path = 'training/qlearning.ckpt-1576000'
 # Atari game to learn
 # You can also try: 'Breakout-v0', 'Pong-v0', 'SpaceInvaders-v0', ...
 game = 'MsPacman-v0'
@@ -80,7 +80,7 @@ anneal_epsilon_timesteps = 400000
 #   Utils Parameters
 # =============================
 # Display or not gym evironment screens
-show_training = False
+show_training = True
 # Directory for storing tensorboard summaries
 summary_dir = '/tmp/tflearn_logs/'
 summary_interval = 100
