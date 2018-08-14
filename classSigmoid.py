@@ -11,7 +11,7 @@ class edge:
         self.weight = v
 
 class node:
-    def __init__(self, bias, ID, aType = 'step'):
+    def __init__(self, bias, ID, aType='step'):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -28,6 +28,8 @@ class node:
                 return 1
             else:
                 return 0
+        if self.aType == "sigmoid":
+            return 1 / (1 + math.exp(-p))
 
     def activateAsOutput(self):
         p = 0
@@ -45,6 +47,12 @@ class node:
     def setWeights(self, weight):
         self.weights.append(weight)
 
+    def reset(self):
+        self.inputs = []
+        self.weights = []
+        self.out = 0
+        self.ID = ID
+
     def __str__(self):
         return str(self.ID)
 
@@ -55,11 +63,11 @@ class network:
         self.outputNodes = []
         self.inputNodes = []
 
-    def addNode(self, ID, bias):
+    def addNode(self, ID, bias, aType="step"):
         """
         Parameters: ID, bias
         """
-        self.nodes[ID] = (node(bias, ID))
+        self.nodes[ID] = (node(bias, ID, aType))
 
     def inputToNode(self, ID, inputVal):
         """
@@ -124,6 +132,12 @@ class network:
             i = str(i)
             ret.append(self.nodes[i].out)
         return ret
+
+    def reset(self):
+        self.nodes = {}
+        self.edges = {}
+        self.outputNodes = []
+        self.inputNodes = []
 
 if __name__ == "__main__":
     pass
