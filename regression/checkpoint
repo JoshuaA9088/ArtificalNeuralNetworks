@@ -1,2 +1,2 @@
-model_checkpoint_path: "/mnt/disk/repos/ArtificialNeuralNetworks/regression/sample5.model"
-all_model_checkpoint_paths: "/mnt/disk/repos/ArtificialNeuralNetworks/regression/sample5.model"
+model_checkpoint_path: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\perceptron3.model"
+all_model_checkpoint_paths: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\perceptron3.model"

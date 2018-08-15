@@ -114,7 +114,7 @@ def computeErrorforLineGivenPointst(m,b,X, Y):
         totalError += (Y[i] - (m*X[i] + b))
     return totalError / n
 
-def stepGradient(b_current, m_current, X, Y, lRate = .0001):
+def stepGradient(b_current, m_current, X, Y, lRate = .00001):
     b_gradient = 0
     m_gradient = 0
     n = len(X)
@@ -131,6 +131,7 @@ plotData(data)
 X=[d[0] for d in data]
 Y=[d[1] for d in data]
 C = [d[2] for d in data]
+
 b=0
 m=0
     
@@ -140,13 +141,13 @@ line=drawLine(m,b)
 while True:
     line.undraw()
 
-    #m,b =stepGradient(m,b,X, Y)
-    m,b,cost = gradientDescent(m,b,X,Y)
+    m,b = stepGradient(m,b,X, Y)
+    #m,b,cost = gradientDescent(m,b,X,Y)
     line=drawLine(m,b)
 
     #print(m,b, cost)
     #print("Error", error)
-    wait(0.5)
+    wait(0.2)
     """
     ans=input("Press any key to continue")
     if ans=='q':

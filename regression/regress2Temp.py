@@ -81,8 +81,7 @@ def corr(X,Y):
     r = t/b
     return r
     
-def gradientDescent(b0,b1,d):
-    lRate=0.01
+def gradientDescent(b0,b1,d, lRate=0.01):
     yHat=b0+b1*d[0]
     error=yHat-d[1]
     print("error is ",error)
