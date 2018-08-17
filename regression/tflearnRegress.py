@@ -80,10 +80,10 @@ def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
     plt.title(savePath[:-6])
     plt.show()
 
-testRegress("sampleData.txt", "sample.model")#, retrain=True)
-testRegress("sampleData1.txt", "sample1.model")#, retrain=True)
-testRegress("sampleData3.txt", "sample3.model")#, 200000, retrain=True)
-testRegress("sampleData4.txt", "sample4.model")#, 200000, retrain=True)
-testRegress("sampleData5.txt", "sample5.model")#, 200000, retrain=True)
+testRegress("sampleData.txt", "models/sample.model", retrain=True)
+testRegress("sampleData1.txt", "models/sample1.model", retrain=True)
+testRegress("sampleData3.txt", "models/sample3.model", 200000, retrain=True)
+testRegress("sampleData4.txt", "models/sample4.model", 200000, retrain=True)
+testRegress("sampleData5.txt", "models/sample5.model", 200000, retrain=True)
 
 # testRegress("testSet.csv", "testSet.model")
