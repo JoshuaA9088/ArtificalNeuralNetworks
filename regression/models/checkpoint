@@ -1,2 +1,2 @@
-model_checkpoint_path: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\models\\sampleData.model"
-all_model_checkpoint_paths: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\models\\sampleData.model"
+model_checkpoint_path: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\models\\sample5.model"
+all_model_checkpoint_paths: "C:\\Users\\Joshua\\repos\\ArtificialNeuralNetworks\\regression\\models\\sample5.model"

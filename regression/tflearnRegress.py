@@ -4,6 +4,10 @@ import tensorflow as tf
 import tflearn
 import matplotlib.pyplot as plt
 import os.path
+import datetime
+
+date = str(datetime.datetime.now()).split('.')[0][-8:]
+date = date.replace(":", ".")
 
 
 def train_network(x, y, n_epoch=2000, LR=0.01, loadModel=None, retrain=False):
@@ -19,17 +23,24 @@ def train_network(x, y, n_epoch=2000, LR=0.01, loadModel=None, retrain=False):
             model.load(loadModel)
             if retrain: # Force retrain given model
                 print("Successfully loaded old model. Forcing retrain!")
-                model.fit(x, y, n_epoch, snapshot_epoch=False)
+                try:
+                    m = list(loadModel)
+                    m = m[m.index("/")+1:m.index(".")]
+                    m = "".join(m)
+                except:
+                    m = 'Invalid_Name'
+                ID = "tfLearn_Regress_"+ m + "_" + date
+                model.fit(x, y, n_epoch, snapshot_epoch=False, run_id=ID)
                 return model
 
             print("Successfully loaded old model. Skipping training...")
             return model
 
         except: # If model is not found, create it
-            model.fit(x, y, n_epoch, snapshot_epoch=False)
+            model.fit(x, y, n_epoch, snapshot_epoch=False, run_id=ID)
             return model
 
-    model.fit(x, y, n_epoch, snapshot_epoch=False)
+    model.fit(x, y, n_epoch, snapshot_epoch=False, run_id=ID)
 
     return model
 
@@ -80,10 +91,10 @@ def testRegress(dataPath, savePath, n_epochs=5000, LR=.01, retrain=False):
     plt.title(savePath[:-6])
     plt.show()
 
-testRegress("sampleData.txt", "models/sample.model", retrain=True)
+testRegress("sampleData.txt", "models/sample.model", 2000, retrain=True)
 testRegress("sampleData1.txt", "models/sample1.model", retrain=True)
-testRegress("sampleData3.txt", "models/sample3.model", 200000, retrain=True)
-testRegress("sampleData4.txt", "models/sample4.model", 200000, retrain=True)
-testRegress("sampleData5.txt", "models/sample5.model", 200000, retrain=True)
+testRegress("sampleData3.txt", "models/sample3.model", 10000, retrain=True)
+testRegress("sampleData4.txt", "models/sample4.model", 10000, retrain=True)
+testRegress("sampleData5.txt", "models/sample5.model", 10000, retrain=True)
 
 # testRegress("testSet.csv", "testSet.model")
