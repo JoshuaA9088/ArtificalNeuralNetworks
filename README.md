@@ -1,2 +1,2 @@
 # ArtificalNeuralNetworks
-Python Neural Networks
+Python Neural Networks for Perceptron and Linear Regression
