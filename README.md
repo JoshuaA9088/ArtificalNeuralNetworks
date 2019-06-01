@@ -1,2 +1,2 @@
 # ArtificalNeuralNetworks
-Python Neural Networks for Perceptron and Linear Regression
+Python Neural Networks based on Tensorflow, tflearn, keras and raw python.
