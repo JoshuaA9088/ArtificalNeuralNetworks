@@ -1,4 +1,6 @@
+from collections import defaultdict
 import math
+
 
 class edge:
     def __init__(self, weight):
@@ -10,8 +12,9 @@ class edge:
     def setWeight(self, v):
         self.weight = v
 
+
 class node:
-    def __init__(self, bias, ID, aType = 'step'):
+    def __init__(self, bias, ID, aType='step'):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -41,10 +44,11 @@ class node:
     def __str__(self):
         return str(self.ID)
 
+
 class network:
     def __init__(self):
         self.nodes = {}
-        self.edges = {}
+        self.edges = defaultdict(list)
         self.outputs = []
         self.inputs = []
         self.activeNodes = {}
@@ -62,23 +66,15 @@ class network:
         return self.nodes[ID].getBias()
 
     def connectEdge(self, tar, src):
-        self.target = (tar)
-        self.src = (src)
-        # Try catch so first connection defines
-        # target in dictionary, all others are only appended
-        try:
-            self.edges[self.target]
-        except:
-            self.edges[self.target] = []
+        self.target = str(tar)
+        self.src = str(src)
         self.edges[self.target].append(self.src)
 
     def getEdges(self, tar):
         # Returns Connections based on passed target
         target = str(tar)
-        try:
-            self.edges[target]
-        except:
-            return "Undefined Target"
+        if self.edges[target] == []:
+            return None
         return self.edges[target]
 
     def setOut(self, outputs):
@@ -99,16 +95,16 @@ class network:
         for i in self.outputs:
             for e in self.edges[str(i)]:
                 try:
-                    print self.activeNodes[e[0]]
-                except:
+                    print(self.activeNodes[e[0]])
+                except KeyError:
                     pass
-
 
     def getOut(self):
         ret = []
         for i in range(len(self.outputs)):
             ret.append(self.outputs[i].out)
         return ret
+
 
 n = network()
 
@@ -117,8 +113,6 @@ n = network()
 n.addNode("i0", -50)
 n.addNode("i1", -50)
 n.addNode("o0", 0)
-
-print(n.getBiasNode("i0"))
 
 n.inputToNode("i0", -100000)
 n.inputToNode("i1", -100000)
@@ -133,8 +127,8 @@ nodes = n.getAllNodes()
 
 # Connect Edges to network with weights
 # n.connectEdge(target, (src, weight))
-n.connectEdge("o0", ("i0", 1)) # W = 0.5
-n.connectEdge("o0", ("i1", 1)) # W = -.1
+n.connectEdge("o0", ("i0", 1))  # W = 0.5
+n.connectEdge("o0", ("i1", 1))  # W = -.1
 
 # Set output/input nodes
 n.setOut([nodes["o0"]])

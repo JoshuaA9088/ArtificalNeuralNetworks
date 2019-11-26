@@ -15,8 +15,8 @@ def xor(val1, val2):
     n.setInputNodes(["a", "b", "c", "d"])
     n.setOutputNodes(["o0"])
 
-    n.inputToNode("a", val1) # -> 0
-    n.inputToNode("b", val2) # -> -.1
+    n.inputToNode("a", val1)  # -> 0
+    n.inputToNode("b", val2)  # -> -.1
 
     n.connectEdge("c", "a", 1)
     n.connectEdge("c", "b", 1)
@@ -24,8 +24,8 @@ def xor(val1, val2):
     n.connectEdge("d", "a", 1)
     n.connectEdge("d", "b", 1)
 
-    n.connectEdge("o0","c", 1) # W = 0.5
-    n.connectEdge("o0","d", 1) # W = -.1
+    n.connectEdge("o0", "c", 1)  # W = 0.5
+    n.connectEdge("o0", "d", 1)  # W = -.1
 
     n.step()
 
@@ -33,15 +33,17 @@ def xor(val1, val2):
 
     return output
 
+
 def test():
-    o1 = xor(1, 0) # -> 1
-    o2 = xor(0, 1) # -> 1
-    o3 = xor(1, 1) # -> 1
-    o4 = xor(0, 0) # -> 0
+    o1 = xor(1, 0)  # -> 1
+    o2 = xor(0, 1)  # -> 1
+    o3 = xor(1, 1)  # -> 1
+    o4 = xor(0, 0)  # -> 0
     print(o1, "should be 1")
     print(o2, "should be 1")
     print(o3, "should be 1")
     print(o4, "should be 0")
+
 
 test()
 

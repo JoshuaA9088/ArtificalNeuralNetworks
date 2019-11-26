@@ -1,11 +1,13 @@
+
 def getData(filename):
-    data=[]
-    f=open(filename)
+    """
+    Read X Y data into list
+    """
+    data = []
+    f = open(filename)
     for line in f:
-        line=line.split()
+        line = line.split()
         for i in range(len(line)):
-            line[i]=float(line[i])
-        #print(line)
+            line[i] = float(line[i])
         data.append(line)
     return data
-    

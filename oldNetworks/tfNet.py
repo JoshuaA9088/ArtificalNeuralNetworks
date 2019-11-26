@@ -1,5 +1,9 @@
 import tensorflow as tf
 
+# Not currently woking on tf 2.0
+# global_variables_initializer() was deprecated
+
+
 def network(bVal, cVal):
 
     # first, create a TensorFlow constant
@@ -15,7 +19,7 @@ def network(bVal, cVal):
     a = tf.multiply(d, e, name='a')
     # setup the variable initialisation
     init_op = tf.global_variables_initializer()
-    
+
     # start the session
     with tf.Session() as sess:
         # initialise the variables
@@ -24,4 +28,6 @@ def network(bVal, cVal):
         a_out = sess.run(a)
         print("Variable a is {}".format(a_out))
 
-network(10.0, 20.0)
+
+if __name__ == "__main__":
+    network(10.0, 20.0)

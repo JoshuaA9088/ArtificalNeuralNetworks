@@ -32,24 +32,24 @@ def genData(numPoints, bias, variance):
         y[i] = (i + bias) + random.uniform(0, 1) * variance
     return x, y
 
+
 def sigmoid_activation(x):
-	# compute and return the sigmoid activation value for a
-	# given input value
-	return 1.0 / (1 + np.exp(-x))
+    return 1.0 / (1 + np.exp(-x))
+
 
 # gen 100 points with a bias of 25 and 10 variance as a bit of noise
 x, y = genData(100, 25, 10)
-print len(x)
-print len(y)
+print(len(x))
+print(len(y))
 m, n = np.shape(x)
-numIterations= 100000
+numIterations = 100000
 alpha = 0.0005
 theta = np.ones(n)
 theta = gradientDescent(x, y, theta, alpha, m, numIterations)
 plt.figure()
 colors = np.random.rand(50)
 
-for i in range (len(x)):
+for i in range(len(x)):
     plt.scatter(x[:, 1][i], y[i], marker="o")
     preds = sigmoid_activation(x.dot(theta))
     plt.plot(preds, y)

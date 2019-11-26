@@ -8,8 +8,8 @@ from pyRegress import *
 input_dim = 1
 output_dim = 1
 
-x = [1,2,3,4,5]
-y = [1,2,3,4,5]
+x = [1, 2, 3, 4, 5]
+y = [1, 2, 3, 4, 5]
 
 epochs = 2000
 learning_rate = 0.01

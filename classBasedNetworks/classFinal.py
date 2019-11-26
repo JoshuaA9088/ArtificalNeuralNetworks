@@ -1,4 +1,6 @@
+from collections import defaultdict
 import math
+
 
 class edge:
     def __init__(self, weight):
@@ -10,8 +12,9 @@ class edge:
     def setWeight(self, v):
         self.weight = v
 
+
 class node:
-    def __init__(self, bias, ID, aType = 'step'):
+    def __init__(self, bias, ID, aType='step'):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -48,10 +51,11 @@ class node:
     def __str__(self):
         return str(self.ID)
 
+
 class network:
     def __init__(self):
         self.nodes = {}
-        self.edges = {}
+        self.edges = defaultdict(list)
         self.outputNodes = []
         self.inputNodes = []
 
@@ -74,29 +78,16 @@ class network:
         return self.nodes[ID].getBias()
 
     def connectEdge(self, tar, src, weight):
-        """
-        Parameters: target, source, weight
-        """
         self.target = (tar)
         self.src = (src)
-        # Try catch so first connection defines target in dictionary, all others are only appended
-        try:
-            self.edges[self.target]
-        except:
-            self.edges[self.target] = []
         self.edges[self.target].append(self.src)
         self.nodes[self.target].setWeights(weight)
 
     def getEdges(self, tar):
-        """
-        Parameters: target
-        """
         # Returns Connections based on passed target
         target = str(tar)
-        try:
-            self.edges[target]
-        except:
-            return "Undefined Target"
+        if self.edges[target] == []:
+            return None
         return self.edges[target]
 
     def setOutputNodes(self, outputs):
@@ -124,6 +115,7 @@ class network:
             i = str(i)
             ret.append(self.nodes[i].out)
         return ret
+
 
 if __name__ == "__main__":
     pass

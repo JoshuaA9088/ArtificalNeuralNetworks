@@ -1,4 +1,6 @@
+from collections import defaultdict
 import math
+
 
 class edge:
     def __init__(self, weight):
@@ -10,8 +12,9 @@ class edge:
     def setWeight(self, v):
         self.weight = v
 
+
 class node:
-    def __init__(self, bias, ID, aType = 'step'):
+    def __init__(self, bias, ID, aType='step'):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -48,10 +51,11 @@ class node:
     def __str__(self):
         return str(self.ID)
 
+
 class network:
     def __init__(self):
         self.nodes = {}
-        self.edges = {}
+        self.edges = defaultdict(list)
         self.outputNodes = []
         self.inputNodes = []
 
@@ -70,21 +74,14 @@ class network:
     def connectEdge(self, tar, src, weight):
         self.target = (tar)
         self.src = (src)
-        # Try catch so first connection defines target in dictionary, all others are only appended
-        try:
-            self.edges[self.target]
-        except:
-            self.edges[self.target] = []
         self.edges[self.target].append(self.src)
         self.nodes[self.target].setWeights(weight)
 
     def getEdges(self, tar):
         # Returns Connections based on passed target
         target = str(tar)
-        try:
-            self.edges[target]
-        except:
-            return "Undefined Target"
+        if self.edges[target] == []:
+            return None
         return self.edges[target]
 
     def setOutputNodes(self, outputs):
@@ -126,21 +123,19 @@ def test():
 
     n.addNode("o0", 0)
 
-    n.connectEdge("i0L1", "i0L0", 1 )
-    n.connectEdge("i0L1", "i1L0", 1 )
-    n.connectEdge("i0L1", "i2L0", 1 )
+    n.connectEdge("i0L1", "i0L0", 1)
+    n.connectEdge("i0L1", "i1L0", 1)
+    n.connectEdge("i0L1", "i2L0", 1)
 
-    n.connectEdge("i1L1", "i0L0", 1 )
-    n.connectEdge("i1L1", "i1L0", 1 )
-    n.connectEdge("i1L1", "i2L0", 1 )
+    n.connectEdge("i1L1", "i0L0", 1)
+    n.connectEdge("i1L1", "i1L0", 1)
+    n.connectEdge("i1L1", "i2L0", 1)
 
     n.connectEdge("o0", "i0L1", 1)
     n.connectEdge("o0", "i2L1", 1)
 
     # n.connectEdge("o0","i0", 1) # W = 0.5
     # n.connectEdge("o0","i1", 1) # W = -.1
-
-
 
 
 if __name__ == "__main__":
