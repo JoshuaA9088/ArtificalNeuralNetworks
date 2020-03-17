@@ -1,5 +1,5 @@
-import math
-from classFinal import *
+# -*- coding: utf-8 -*-
+from NN import network
 
 
 def orNetwork(val1, val2):
@@ -20,9 +20,7 @@ def orNetwork(val1, val2):
 
     n.step()
 
-    output = n.getOut()
-
-    return output
+    return n.getOut()
 
 
 def test():
@@ -30,10 +28,21 @@ def test():
     o2 = orNetwork(0, 1)  # -> 1
     o3 = orNetwork(1, 1)  # -> 1
     o4 = orNetwork(0, 0)  # -> 0
-    print(o1, "should be 1")
-    print(o2, "should be 1")
-    print(o3, "should be 1")
-    print(o4, "should be 0")
+
+    assert o1 == [1]
+    assert o2 == [1]
+    assert o3 == [1]
+    assert o4 == [0]
 
 
-test()
+if __name__ == "__main__":
+    test()
+
+"""
+INPUT	OUTPUT
+A	B	A OR B
+0	0	0
+0	1	1
+1	0	1
+1	1	1
+"""

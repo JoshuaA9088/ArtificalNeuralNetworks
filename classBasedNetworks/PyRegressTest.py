@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn as nn
+from pyRegress import fitLine
 from torch.autograd import Variable
-import numpy as np
-import matplotlib.pyplot as plt
-from pyRegress import *
 
 input_dim = 1
 output_dim = 1
