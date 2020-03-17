@@ -1,7 +1,6 @@
+# -*- coding: utf-8 -*-
 # Single Layer Neural Network
-
 from collections import defaultdict
-import math
 
 
 class edge:
@@ -16,7 +15,7 @@ class edge:
 
 
 class node:
-    def __init__(self, bias, ID, aType='step'):
+    def __init__(self, bias, ID, aType="step"):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -28,8 +27,8 @@ class node:
         self.inputs = inputs
 
     def actFunction(self, p):
-        if self.aType == 'step':
-            return (1 if p >= 0 else 0)
+        if self.aType == "step":
+            return 1 if p >= 0 else 0
 
     def addWeight(self, val):
         self.weights.append(val)

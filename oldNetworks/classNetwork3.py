@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from collections import defaultdict
-import math
 
 
 class edge:
@@ -14,7 +14,7 @@ class edge:
 
 
 class node:
-    def __init__(self, bias, ID, aType='step'):
+    def __init__(self, bias, ID, aType="step"):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -26,7 +26,7 @@ class node:
         self.inputs = inputs
 
     def actFunction(self, p):
-        if self.aType == 'step':
+        if self.aType == "step":
             if p > 0:
                 return 1
             else:
@@ -60,7 +60,7 @@ class network:
         self.inputNodes = []
 
     def addNode(self, ID, bias):
-        self.nodes[ID] = (node(bias, ID))
+        self.nodes[ID] = node(bias, ID)
 
     def inputToNode(self, ID, inputVal):
         self.nodes[ID].setInputs(inputVal)
@@ -72,8 +72,8 @@ class network:
         return self.nodes[ID].getBias()
 
     def connectEdge(self, tar, src, weight):
-        self.target = (tar)
-        self.src = (src)
+        self.target = tar
+        self.src = src
         self.edges[self.target].append(self.src)
         self.nodes[self.target].setWeights(weight)
 
@@ -95,17 +95,17 @@ class network:
 
     def step(self):
         val = []
-        for i in (self.inputNodes):
+        for i in self.inputNodes:
             i = str(i)
             val.append(self.nodes[i].activateAsInput())
-        for i in (self.outputNodes):
+        for i in self.outputNodes:
             i = str(i)
             self.inputToNode(i, (val))
             self.nodes[i].activateAsOutput()
 
     def getOut(self):
         ret = []
-        for i in (self.outputNodes):
+        for i in self.outputNodes:
             i = str(i)
             ret.append(self.nodes[i].out)
         return ret
