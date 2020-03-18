@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from collections import defaultdict
-import math
 
 
 class edge:
@@ -14,7 +14,7 @@ class edge:
 
 
 class node:
-    def __init__(self, bias, ID, aType='step'):
+    def __init__(self, bias, ID, aType="step"):
         self.bias = bias
         self.inputs = []
         self.weights = []
@@ -26,7 +26,7 @@ class node:
         self.inputs = inputs
 
     def actFunction(self, p):
-        if self.aType == 'step':
+        if self.aType == "step":
             if p >= 0:
                 return 1
             else:
@@ -54,7 +54,7 @@ class network:
         self.activeNodes = {}
 
     def addNode(self, ID, bias):
-        self.nodes[ID] = (node(bias, ID))
+        self.nodes[ID] = node(bias, ID)
 
     def inputToNode(self, ID, inputVal):
         self.nodes[ID].setInputs(inputVal)
@@ -87,7 +87,7 @@ class network:
         return self.inputs
 
     def step(self):
-        for i in (self.nodes):
+        for i in self.nodes:
             if i in self.outputs:
                 pass
             else:

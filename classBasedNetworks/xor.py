@@ -1,4 +1,5 @@
-from classFinal import *
+# -*- coding: utf-8 -*-
+from NN import network
 
 
 def xor(val1, val2):
@@ -29,9 +30,7 @@ def xor(val1, val2):
 
     n.step()
 
-    output = n.getOut()
-
-    return output
+    return n.getOut()
 
 
 def test():
@@ -39,18 +38,27 @@ def test():
     o2 = xor(0, 1)  # -> 1
     o3 = xor(1, 1)  # -> 1
     o4 = xor(0, 0)  # -> 0
-    print(o1, "should be 1")
-    print(o2, "should be 1")
-    print(o3, "should be 1")
-    print(o4, "should be 0")
+
+    assert o1 == [1]
+    assert o2 == [1]
+    assert o3 == [1]
+    assert o4 == [0]
 
 
 test()
 
 
 """
-0 0 -> 0
-0 1 -> 1
-1 0 -> 1
-1 1 -> 0
+
+If I remember correctly, a 2 layer, 2 input node
+linear perceptron cannot solve xor.
+
+More research needed.
+
+INPUT	OUTPUT
+A	B	A xor B
+0	0	1
+0	1	1
+1	0	1
+1	1	0
 """

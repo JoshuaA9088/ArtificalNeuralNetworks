@@ -1,10 +1,9 @@
-import torch
+# -*- coding: utf-8 -*-
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class Net(nn.Module):
-
     def __init__(self):
         super(Net, self).__init__()
         # 1 input image channel, 6 output channels, 5x5 square convolution
@@ -35,5 +34,6 @@ class Net(nn.Module):
         return num_features
 
 
-net = Net()
-print(net)
+if __name__ == "__main__":
+    net = Net()
+    print(net)
